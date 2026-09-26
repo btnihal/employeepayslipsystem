@@ -1,0 +1,44 @@
+{% extends 'employees/base.html' %}
+
+
+{% block title %}
+Delete Employee
+{% endblock %}
+
+
+{% block content %}
+
+<div class="card">
+
+    <h1>Delete Employee</h1>
+
+    <p>
+        Are you sure you want to delete
+        <strong>{{ employee.name }}</strong>?
+    </p>
+
+    <br>
+
+    <form method="POST">
+
+        {% csrf_token %}
+
+        <button
+            type="submit"
+            class="btn btn-danger"
+        >
+            Yes, Delete
+        </button>
+
+        <a
+            href="{% url 'emp_list' %}"
+            class="btn btn-secondary"
+        >
+            Cancel
+        </a>
+
+    </form>
+
+</div>
+
+{% endblock %}

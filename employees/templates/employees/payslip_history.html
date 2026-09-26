@@ -1,0 +1,111 @@
+{% extends 'employees/base.html' %}
+
+{% block content %}
+
+<div class="section-header">
+
+    <div>
+        <h1>Payslip History</h1>
+        <p class="page-description">
+            View all generated employee payslips.
+        </p>
+    </div>
+
+    <a href="{% url 'generate_payslip' %}" class="btn">
+        + Generate Payslip
+    </a>
+
+</div>
+
+
+<div class="section">
+
+    {% if payslips %}
+
+    <div class="table-container">
+
+        <table>
+
+            <thead>
+
+                <tr>
+                    <th>Employee ID</th>
+                    <th>Employee Name</th>
+                    <th>Designation</th>
+                    <th>Month</th>
+                    <th>Leave Days</th>
+                    <th>Gross Salary</th>
+                    <th>Net Salary</th>
+                    <th>Action</th>
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                {% for payslip in payslips %}
+
+                <tr>
+
+                    <td>
+                        {{ payslip.employee.employee_id }}
+                    </td>
+
+                    <td>
+                        {{ payslip.employee.name }}
+                    </td>
+
+                    <td>
+                        {{ payslip.employee.designation }}
+                    </td>
+
+                    <td>
+                        {{ payslip.month|date:"F Y" }}
+                    </td>
+
+                    <td>
+                        {{ payslip.leave_count }}
+                    </td>
+
+                    <td>
+                        ₹ {{ payslip.gross_salary }}
+                    </td>
+
+                    <td>
+                        <strong>
+                            ₹ {{ payslip.net_salary }}
+                        </strong>
+                    </td>
+
+                    <td>
+
+                        <a href="{% url 'payslip_detail' payslip.pk %}"
+                           class="btn btn-small">
+                            View
+                        </a>
+
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+    {% else %}
+
+    <p>No payslips have been generated yet.</p>
+
+    <a href="{% url 'generate_payslip' %}" class="btn">
+        Generate First Payslip
+    </a>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}

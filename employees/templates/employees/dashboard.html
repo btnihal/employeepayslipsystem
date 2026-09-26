@@ -1,0 +1,172 @@
+{% extends 'employees/base.html' %}
+
+{% block content %}
+
+<h1>Dashboard</h1>
+
+<p class="page-description">
+    Employee Payslip Management System
+</p>
+
+<div class="card-grid">
+
+    <div class="card">
+        <h3>Total Employees</h3>
+        <div class="card-number">
+            {{ total_employees }}
+        </div>
+        <a href="{% url 'emp_list' %}" class="btn">
+            View Employees
+        </a>
+    </div>
+
+    <div class="card">
+        <h3>Total Payslips</h3>
+        <div class="card-number">
+            {{ total_payslips }}
+        </div>
+        <a href="{% url 'payslip_history' %}" class="btn">
+            View Payslips
+        </a>
+    </div>
+
+</div>
+
+
+<div class="section">
+
+    <div class="section-header">
+        <h2>Recent Employees</h2>
+
+        <a href="{% url 'emp_create' %}" class="btn">
+            + Add Employee
+        </a>
+    </div>
+
+    {% if recent_employees %}
+
+    <div class="table-container">
+
+        <table>
+
+            <thead>
+                <tr>
+                    <th>Employee ID</th>
+                    <th>Name</th>
+                    <th>Designation</th>
+                    <th>Basic Salary</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                {% for employee in recent_employees %}
+
+                <tr>
+                    <td>{{ employee.employee_id }}</td>
+                    <td>{{ employee.name }}</td>
+                    <td>{{ employee.designation }}</td>
+                    <td>₹ {{ employee.basic_salary }}</td>
+
+                    <td>
+                        <a href="{% url 'emp_detail' employee.pk %}"
+                           class="btn btn-small">
+                            View
+                        </a>
+                    </td>
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+    {% else %}
+
+    <p>No employees found.</p>
+
+    {% endif %}
+
+</div>
+
+
+<div class="section">
+
+    <div class="section-header">
+
+        <h2>Recent Payslips</h2>
+
+        <a href="{% url 'payslip_history' %}" class="btn">
+            View All
+        </a>
+
+    </div>
+
+    {% if recent_payslips %}
+
+    <div class="table-container">
+
+        <table>
+
+            <thead>
+                <tr>
+                    <th>Employee</th>
+                    <th>Month</th>
+                    <th>Leave Days</th>
+                    <th>Net Salary</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                {% for payslip in recent_payslips %}
+
+                <tr>
+
+                    <td>
+                        {{ payslip.employee.name }}
+                    </td>
+
+                    <td>
+                        {{ payslip.month|date:"F Y" }}
+                    </td>
+
+                    <td>
+                        {{ payslip.leave_count }}
+                    </td>
+
+                    <td>
+                        ₹ {{ payslip.net_salary }}
+                    </td>
+
+                    <td>
+                        <a href="{% url 'payslip_detail' payslip.pk %}"
+                           class="btn btn-small">
+                            View
+                        </a>
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+    {% else %}
+
+    <p>No payslips generated yet.</p>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}

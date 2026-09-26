@@ -1,0 +1,38 @@
+{% extends 'employees/base.html' %}
+
+
+{% block title %}
+Generate Payslip
+{% endblock %}
+
+
+{% block content %}
+
+<div class="card">
+
+    <h1>Generate Payslip</h1>
+
+    <p>
+        Select an employee and enter the monthly leave count.
+    </p>
+
+    <br>
+
+    <form method="POST">
+
+        {% csrf_token %}
+
+        {{ form.as_p }}
+
+        <button
+            type="submit"
+            class="btn"
+        >
+            Generate Payslip
+        </button>
+
+    </form>
+
+</div>
+
+{% endblock %}
