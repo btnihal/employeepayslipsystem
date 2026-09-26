@@ -45,4 +45,4 @@ A Django-based Employee Payslip Generation System developed as a machine task.
 Clone the project:
 
 ```bash
-git clone <your-github-repository-url>
+git clone https://github.com/btnihal/employeepayslipsystem.git
